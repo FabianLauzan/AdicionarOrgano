@@ -1,0 +1,38 @@
+/* Estilos personalizados adicionales a Tailwind */
+.form-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.editor-toolbar {
+  background-color: #f3f4f6;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.editor-toolbar button {
+  margin-right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.editor-toolbar button:hover {
+  color: #7a1ab9;
+}
+
+.editor-textarea {
+  min-height: 120px;
+  padding: 1rem;
+  width: 100%;
+  resize: none;
+}
+
+/* Validación de campos */
+.error-message {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.error-border {
+  border-color: #ef4444 !important;
+}

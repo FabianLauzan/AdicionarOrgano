@@ -42,6 +42,11 @@ const AdicionarOrgano = () => {
     if (!formData.orden) newErrors.orden = 'Este campo es obligatorio';
     if (!formData.fechaInicio) newErrors.fechaInicio = 'Este campo es obligatorio';
     
+    // Validar que fechaFin sea mayor que fechaInicio si está presente
+    if (formData.fechaFin && formData.fechaInicio && formData.fechaFin <= formData.fechaInicio) {
+      newErrors.fechaFin = 'La fecha de fin debe ser posterior a la fecha de inicio';
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -64,7 +69,7 @@ const AdicionarOrgano = () => {
       nivelJerarquico: '',
       abreviatura: '',
       orden: '',
-      fechaInicio: '20245-01-01',
+      fechaInicio: '2025-01-01',
       fechaFin: '',
       descripcion: ''
     });
@@ -75,6 +80,7 @@ const AdicionarOrgano = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="form-container bg-white rounded-xl shadow-md overflow-hidden">
+        {/* Cabecera con color azul original */}
         <div className="bg-blue-600 p-6">
           <h1 className="text-2xl font-bold text-white">Adicionar Órgano</h1>
         </div>
@@ -93,47 +99,43 @@ const AdicionarOrgano = () => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Denominación en su propia fila */}
+              <div className="form-group">
+                <label className="block text-gray-700 font-medium mb-2">
+                  Denominación <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="denominacion"
+                  value={formData.denominacion}
+                  onChange={handleChange}
+                  className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.denominacion ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Ingrese la denominación"
+                />
+                {errors.denominacion && (
+                  <p className="error-message">{errors.denominacion}</p>
+                )}
+              </div>
+
+              {/* Resto de campos en grid de 2 columnas */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Denominación */}
-                <div className="form-group">
-                  <label className="block text-gray-700 font-medium mb-2">
-                    Denominación <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="denominacion"
-                    value={formData.denominacion}
-                    onChange={handleChange}
-                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                      errors.denominacion ? 'border-red-500' : 'border-gray-300'
-                    }`}
-                    placeholder="Ingrese la denominación"
-                  />
-                  {errors.denominacion && (
-                    <p className="error-message">{errors.denominacion}</p>
-                  )}
-                </div>
-                
                 {/* Especialidad */}
                 <div className="form-group">
                   <label className="block text-gray-700 font-medium mb-2">
                     Especialidad <span className="text-red-500">*</span>
                   </label>
-                  <select
+                  <input
+                    type="text"
                     name="especialidad"
                     value={formData.especialidad}
                     onChange={handleChange}
                     className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                       errors.especialidad ? 'border-red-500' : 'border-gray-300'
                     }`}
-                  >
-                    <option value="">Seleccione una especialidad</option>
-                    <option value="Cardiología">Cardiología</option>
-                    <option value="Neurología">Neurología</option>
-                    <option value="Oftalmología">Oftalmología</option>
-                    <option value="Oncología">Oncología</option>
-                    <option value="Pediatría">Pediatría</option>
-                  </select>
+                    placeholder="Ingrese la especialidad"
+                  />
                   {errors.especialidad && (
                     <p className="error-message">{errors.especialidad}</p>
                   )}
@@ -232,8 +234,13 @@ const AdicionarOrgano = () => {
                     name="fechaFin"
                     value={formData.fechaFin}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.fechaFin ? 'border-red-500' : 'border-gray-300'
+                    }`}
                   />
+                  {errors.fechaFin && (
+                    <p className="error-message">{errors.fechaFin}</p>
+                  )}
                 </div>
               </div>
               
@@ -244,21 +251,21 @@ const AdicionarOrgano = () => {
                 </label>
                 <div className="border border-gray-300 rounded-lg overflow-hidden">
                   <div className="editor-toolbar">
-                    <button type="button" className="font-bold">B</button>
-                    <button type="button" className="italic">I</button>
-                    <button type="button" className="underline">U</button>
-                    <button type="button">T<sup>2</sup></button>
-                    <button type="button">T<sub>2</sub></button>
-                    <button type="button">L</button>
-                    <button type="button" className="font-bold">m</button>
-                    <button type="button" className="font-bold">n</button>
-                    <button type="button" className="font-bold">e</button>
+                    <button type="button" className="font-bold hover:text-blue-500">B</button>
+                    <button type="button" className="italic hover:text-blue-500">I</button>
+                    <button type="button" className="underline hover:text-blue-500">U</button>
+                    <button type="button" className="hover:text-blue-500">T<sup>2</sup></button>
+                    <button type="button" className="hover:text-blue-500">T<sub>2</sub></button>
+                    <button type="button" className="hover:text-blue-500">L</button>
+                    <button type="button" className="font-bold hover:text-blue-500">m</button>
+                    <button type="button" className="font-bold hover:text-blue-500">n</button>
+                    <button type="button" className="font-bold hover:text-blue-500">e</button>
                   </div>
                   <textarea
                     name="descripcion"
                     value={formData.descripcion}
                     onChange={handleChange}
-                    className="editor-textarea"
+                    className="editor-textarea focus:ring-2 focus:ring-blue-500"
                     placeholder="Escriba una descripción del órgano..."
                   ></textarea>
                 </div>

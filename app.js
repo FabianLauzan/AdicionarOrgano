@@ -13,6 +13,7 @@ const AdicionarOrgano = () => {
   
   const [errors, setErrors] = React.useState({});
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [isbold, setIsbold]= React.useState(false);
 
   // Manejar cambios en los inputs
   const handleChange = (e) => {
@@ -251,7 +252,7 @@ const AdicionarOrgano = () => {
                 </label>
                 <div className="border border-gray-300 rounded-lg overflow-hidden">
                   <div className="editor-toolbar">
-                    <button type="button" className="font-bold hover:text-blue-500">B</button>
+                    <button type="button" className="font-bold hover:text-blue-500" onClick={(e)=> setIsbold(!isbold)}>B</button>
                     <button type="button" className="italic hover:text-blue-500">I</button>
                     <button type="button" className="underline hover:text-blue-500">U</button>
                     <button type="button" className="hover:text-blue-500">T<sup>2</sup></button>
@@ -265,7 +266,7 @@ const AdicionarOrgano = () => {
                     name="descripcion"
                     value={formData.descripcion}
                     onChange={handleChange}
-                    className="editor-textarea focus:ring-2 focus:ring-blue-500"
+                    className={`editor-textarea focus:ring-2 focus:ring-blue-500 ${isbold && "font-bold"}`}
                     placeholder="Escriba una descripción del órgano..."
                   ></textarea>
                 </div>
